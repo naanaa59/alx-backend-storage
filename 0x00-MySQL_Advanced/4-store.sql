@@ -1,6 +1,6 @@
 -- creates a trigger that decreases the quantity of an item after adding a new order.
 
-UPDATE items SET quantity = (
+UPDATE items SET quantity = quantity - (
 	SELECT SUM(orders.number)
 	FROM orders
 	WHERE orders.item_name=items.name
