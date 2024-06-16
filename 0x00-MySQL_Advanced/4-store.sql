@@ -1,8 +1,8 @@
 -- creates a trigger that decreases the quantity of an item after adding a new order.
-
-UPDATE items SET quantity = quantity - (
-	SELECT SUM(orders.number)
-	FROM orders
-	WHERE orders.item_name=items.name
-)
-WHERE items.name IN (SELECT item_name FROM orders);
+DELIMITER $$
+CREATE TRIGGER decrease_quantity
+AFTER INSERT ON orders
+BEGIN
+	UPDATE items SET quantity = quantity - NEW.number WHERE name=NEW.item_name;
+END$$
+DELIMITER ;
