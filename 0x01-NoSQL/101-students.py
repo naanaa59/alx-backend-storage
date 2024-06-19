@@ -11,7 +11,7 @@ def top_students(mongo_collection):
         total = 0
         for topic in student["topics"]:
             total += topic["score"]
-        av_score = total / 3
+        av_score = total / len(student["topics"]) if topic["score"] else 0
         mongo_collection.update_one({
             "name": student["name"]}, {'$set': {"averageScore": av_score}})
 
