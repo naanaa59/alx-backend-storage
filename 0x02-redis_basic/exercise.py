@@ -24,7 +24,7 @@ class Cache:
     def get(self, key: str, fn: Callable) -> Any:
         """ get a key and convert it to a desired format"""
         value = self._redis.get(key)
-        if value and fn is not None:
+        if fn is not None:
             return fn(value)
         return value
 
