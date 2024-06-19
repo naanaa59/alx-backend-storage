@@ -3,7 +3,7 @@
 
 
 import redis
-from typing import Union, Any, Callable
+from typing import Union, Any, Callable, Optional
 import uuid
 
 
@@ -21,11 +21,11 @@ class Cache:
         self._redis.set(key, data)
         return key
 
-    def get(self, key: str, fn: Callable) -> Any:
+    def get(self, key: str, fn: Optional[Callable] = None) -> Any:
         """ get a key and convert it to a desired format"""
         value = self._redis.get(key)
         if fn is not None:
-            return fn(value)
+            value = fn(value)
         return value
 
     def get_str(self, key: str) -> str:
